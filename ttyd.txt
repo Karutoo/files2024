@@ -1,0 +1,10 @@
+[Unit]
+Description=Startup Script
+After=network.target
+
+[Service]
+ExecStart=/bin/bash -c "cd /home/admin && sudo -u admin ttyd -W -p 8080 bash"
+User=admin
+
+[Install]
+WantedBy=multi-user.target
