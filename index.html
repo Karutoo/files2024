@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>コマンド作成</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            user-select: none; /* ドラッグ不可にする */
+        }
+        #inputValue {
+            padding: 5px;
+            margin: 10px;
+        }
+        #displayURL {
+            font-size: 18px;
+            margin: 10px;
+        }
+        #errorText {
+            color: red;
+            font-size: 16px;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .noselect {
+            user-select: none; /* ドラッグ不可にする */
+        }
+        .responsive-gif {
+            max-width: 80%; /* 横幅に合わせるための設定 */
+            height: auto; 
+        }
+        #usageText {
+            font-size: 20px; /* テキストのフォントサイズ */
+            font-weight: bold; /* テキストの太字 */
+            color: #007bff; /* テキストのカラー */
+            margin-top: 20px; /* 上部のマージンを設定して適切な間隔を確保 */
+        }
+    </style>
+    <script>
+        function updateURL() {
+            var inputValue = document.getElementById('inputValue').value;
+            var errorText = document.getElementById('errorText');
+            var displayURL = document.getElementById('displayURL');
+            var copyButton = document.getElementById('copyButton');
+
+            if (/^b\d{7}$/.test(inputValue)) {
+                errorText.textContent = ''; // エラーメッセージをクリア
+                var url = 'curl -fsSL https://sh.himohimo.workers.dev/?name=' + inputValue + " | sh";
+                displayURL.textContent = url;
+                copyButton.classList.remove('hidden'); // コピーのボタンを表示
+            } else {
+                errorText.textContent = '無効な入力です。bから始まり、7桁の数字を入力してください.';
+                displayURL.textContent = ''; // コマンドをクリア
+                copyButton.classList.add('hidden'); // コピーのボタンを非表示
+            }
+        }
+
+        function copyURL() {
+            var displayURL = document.getElementById('displayURL');
+            var textArea = document.createElement('textarea');
+            textArea.value = displayURL.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert('コマンドがコピーされました: ' + displayURL.textContent);
+        }
+    </script>
+</head>
+<body>
+    <h1>コマンド作成</h1>
+    <label for="inputValue" class="noselect">学籍番号を入力してください:</label>
+    <input type="text" placeholder="b2200520" id="inputValue" class="noselect" oninput="updateURL()" />
+    <br>
+    <p id="errorText" class="noselect"></p>
+    <p id="displayURL"></p>
+    <button id="copyButton" class="hidden" class="noselect" onclick="copyURL()">コマンドをコピー</button>
+    <br>
+
+
+
+    <p id="usageText" class="noselect">使い方</p>
+    <img src="./how2.gif" alt="GIF animation" class="responsive-gif" />
+</body>
+</html>
