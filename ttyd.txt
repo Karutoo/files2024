@@ -3,7 +3,8 @@ Description=Startup Script
 After=network.target
 
 [Service]
-ExecStart=/bin/bash -c "sudo -E -u admin bash -c 'cd /usr/local/src/himo && ttyd -W -p 443 -c \"\$(sudo cat /usr/local/src/himo/username.txt):\$(sudo cat /usr/local/src/himo/password.txt)\" bash'"
+WorkingDirectory=/home/admin
+ExecStart=/usr/local/bin/ttyd -W -p 443 -c $(cat /usr/local/src/himo/username.txt):$(cat /usr/local/src/himo/password.txt) bash
 User=admin
 
 [Install]
