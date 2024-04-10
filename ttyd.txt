@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/home/admin
-ExecStart=/usr/local/bin/ttyd -W -p 443 -c $(cat /usr/local/src/himo/username.txt):$(cat /usr/local/src/himo/password.txt) bash
+ExecStart=/usr/local/bin/ttyd -W -p 443 -c "$(cat /usr/local/src/himo/username.txt):$(cat /usr/local/src/himo/password.txt)" bash
 User=admin
 
 [Install]
