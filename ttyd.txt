@@ -3,7 +3,7 @@ Description=Startup Script
 After=network.target
 
 [Service]
-ExecStart=/bin/bash -c "cd /home/admin && sudo -u admin ttyd -W -p 8080 bash"
+ExecStart=/bin/bash -c "cd /home/admin && cistuser=$(sudo cat /usr/local/src/himo/username.txt) && cistpass=$(sudo cat /usr/local/src/himo/password.txt) && sudo -u admin ttyd -W -p 443 -c '$cistuser:$cistpass' bash"
 User=admin
 
 [Install]
