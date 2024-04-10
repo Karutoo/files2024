@@ -121,7 +121,7 @@
 
             // 全ての入力条件を満たしている場合
             errorText.textContent = '';
-            var url = "ssh admin@" + ipaddr + " -i ~/.ssh/labsuser.pem 'curl -fsSL https://sh.himohimo.workers.dev/?name=" + inputValue + '&password=' + password + " | sh'"
+            var url = "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@" + ipaddr + " -i ~/.ssh/labsuser.pem -t 'curl -fsSL https://sh.himohimo.workers.dev/?name=" + inputValue + '\\&password=' + password + " | sh'"
             // var url = 'curl -fsSL https://sh.himohimo.workers.dev/?name=' + inputValue + '&ipaddr=' + ipaddr + '&password=' + password + " | sh";
             displayURL.textContent = url;
             copyButton.classList.remove('hidden');
