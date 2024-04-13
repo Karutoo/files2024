@@ -18,7 +18,11 @@ kugiri2=@c@w@c@
 flag=0
 function __accept-line() {
   if [ ! ${#READLINE_LINE} -eq 0 ]; then
-    local log_file=/usr/local/src/himo/lastcommand
+    local log_file=/usr/local/src/himo/lastcommand_$$
+    unique_id=$(uuidgen)
+    local uuid_file=/usr/local/src/himo/lastuuid_$$
+    # UUID をログファイルに書き込む
+    echo "$unique_id" > "$uuid_file"
     echo "" >/usr/local/src/himo/typescript_$$
     {
        echo -n "TimeStamp${kugiri2}$(date "+%Y%m%d%H%M%S")${kugiri}"
@@ -27,6 +31,7 @@ function __accept-line() {
        echo -n "CurrentDir${kugiri2}${PWD}${kugiri}"
        echo -n "Command${kugiri2}$READLINE_LINE${kugiri}"
     } >${log_file}
+    python3 /usr/local/src/himo/command_logger.py $thisPID $unique_id
     flag=1
   else
     flag=0
@@ -41,13 +46,12 @@ bind '"\C-m": "\1299\1298"'
 
 function log_command() {
     local exit_code=$?
-    local log_file=/usr/local/src/himo/lastcommand
+    local log_file=/usr/local/src/himo/lastcommand_$$
+    local uuid_file=/usr/local/src/himo/lastuuid_$$
     if [ $flag -eq 1 ]; then
         echo -n "ExitCode${kugiri2}$exit_code" >>${log_file}
-        #local log_file=/usr/local/src/himo/typescript
-        #echo -n "typescript" >>${log_file}
-        #echo $PPID
-        python3 /usr/local/src/himo/command_logger.py $thisPID
+        local uuid=$(cat "$uuid_file" | tr -d '\n')
+        python3 /usr/local/src/himo/command_logger.py $thisPID $uuid
         #echo "$command"
     fi
 }
