@@ -5,9 +5,11 @@ USERNAME=$(cat /usr/local/src/himo/username.txt)
 PASSWORD=$(cat /usr/local/src/himo/password.txt)
 cd /home/admin
 
+directory="/usr/local/src/himo/key"
+
 rm -r "$directory"/*
 
-directory="/usr/local/src/himo/key"
+
 
 if [ ! -d "$directory" ]; then
     mkdir "$directory"
