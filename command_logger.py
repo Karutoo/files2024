@@ -14,7 +14,7 @@ with open(f'/usr/local/src/himo/typescript_{PID}', 'r') as input_file:
     result = result.split("2004l\n")
 
 try:
-    with open(f'/usr/local/src/himo/lastcommand_{PID}', 'r', encoding='utf-8') as file:
+    with open(f'/usr/local/src/himo/lastcommand_{sys.argv[3]}', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         last_line = lines[-1].strip()
         existence_uuid = 0
