@@ -6,6 +6,13 @@ import subprocess
 PID = sys.argv[1]
 result = ""
 
+def limit_string_length(input_string, max_length=1000000, suffix_length=1000):
+    if len(input_string) <= max_length:
+        return input_string
+    else:
+        #print("nagasakoetemasuyo")
+        return input_string[:max_length] + input_string[-suffix_length:]
+
 with open(f'/usr/local/src/himo/typescript_{PID}', 'r') as input_file:
     result = ""
     for line in input_file:
@@ -34,7 +41,7 @@ try:
                         'ip_addr': log_dict['GlobalIP'],
                         'path': log_dict['CurrentDir'],
                         'command': log_dict['Command'],
-                        'output': result[-1],
+                        'output': limit_string_length(result[-1]),
                         'ExitCode': log_dict['ExitCode'],
                         'uuid': sys.argv[2]
                     }
