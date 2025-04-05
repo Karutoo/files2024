@@ -43,7 +43,8 @@ try:
                         'command': log_dict['Command'],
                         'output': limit_string_length(result[-1]),
                         'ExitCode': log_dict['ExitCode'],
-                        'uuid': sys.argv[2]
+                        'uuid': sys.argv[2],
+                        'after_path': sys.argv[4]
                     }
                     #print("-------after-------")
                     #print(data)
