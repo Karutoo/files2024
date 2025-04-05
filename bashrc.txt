@@ -32,7 +32,7 @@ function __accept-line() {
        echo -n "CurrentDir${kugiri2}${PWD}${kugiri}"
        echo -n "Command${kugiri2}$READLINE_LINE${kugiri}"
     } >${log_file}
-    python3 /usr/local/src/himo/command_logger.py $thisPID $unique_id $$ ${PWD}
+    python3 /usr/local/src/himo/command_logger.py $thisPID $unique_id $$
     flag=1
   else
     flag=0
@@ -52,7 +52,7 @@ function log_command() {
     if [ $flag -eq 1 ]; then
         echo -n "ExitCode${kugiri2}$exit_code" >>${log_file}
         local uuid=$(cat "$uuid_file" | tr -d '\n')
-        python3 /usr/local/src/himo/command_logger.py $thisPID $uuid $$
+        python3 /usr/local/src/himo/command_logger.py $thisPID $uuid $$ ${PWD}
         #echo "$command"
     fi
 }
