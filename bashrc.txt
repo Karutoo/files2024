@@ -11,6 +11,7 @@ if [ $NOW_PROCESS != "script" ]; then
   exit
 else #スクリプトだったら
   thisPID=$typescriptID
+  /usr/local/bin/tscat --time --visible /usr/local/src/himo/typescript_$typescriptID >> /var/colitas/tslog.$typescriptID.txt 2>/dev/null &
 fi
 
 username=$(< /usr/local/src/himo/username.txt)
