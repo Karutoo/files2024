@@ -20,6 +20,12 @@ kugiri2=@c@w@c@
 flag=0
 function __accept-line() {
   if [ ! ${#READLINE_LINE} -eq 0 ]; then
+    # 改行が含まれていたら、最初に1行目だけ残す
+    if [[ "$READLINE_LINE" == *$'\n'* ]]; then
+      READLINE_LINE="$(echo "$READLINE_LINE" | head -n 1)"
+      READLINE_POINT=${#READLINE_LINE}
+      #echo "[INFO] 複数行コマンド検出 → 1行目のみ実行: $READLINE_LINE"
+    fi
     local log_file=/usr/local/src/himo/lastcommand_$$
     unique_id=$(uuidgen)
     local uuid_file=/usr/local/src/himo/lastuuid_$$
