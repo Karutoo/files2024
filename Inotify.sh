@@ -41,7 +41,7 @@ while read -r event file name; do
         "StudentID": "'$student_id'"
     }'
     #echo $data
-    curl -X POST 'https://supabasepusher.himohimo.workers.dev/' -H 'Content-Type: application/json' -H 'table: files' -d "$data"
+    curl -X POST 'https://supapush2.himohimo.workers.dev/' -H 'Content-Type: application/json' -H 'table: files' -d "$data"
 
     # イベントがMODIFYの場合、ファイルを比較し差分情報をDBに送信
     if [ "$event_type" == "MODIFY" ] || [ "$event_type" == "MOVED_FROM" ] || [ "$event_type" == "CREATE" ]; then
@@ -79,7 +79,7 @@ while read -r event file name; do
             "diff": "'$escaped_diff'",
             "StudentID": "'$student_id'"
         }'
-        curl -X POST 'https://supabasepusher.himohimo.workers.dev/' -H 'Content-Type: application/json' -H 'table: diff' -d "$data2"
+        curl -X POST 'https://supapush2.himohimo.workers.dev/' -H 'Content-Type: application/json' -H 'table: diff' -d "$data2"
     fi
 
 
